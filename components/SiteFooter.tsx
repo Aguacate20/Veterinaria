@@ -11,6 +11,7 @@ export default function SiteFooter() {
       </p>
       <p className="mt-3">Las fotos y respuestas se usan únicamente para generar tu resultado y no se almacenan en nuestros servidores.</p>
       <nav className="mt-6 flex flex-wrap gap-x-5 gap-y-2 font-medium">
+        <Link href="/guias" className="hover:text-brand-700">Guías</Link>
         <Link href="/acerca" className="hover:text-brand-700">Acerca de</Link>
         <Link href="/privacidad" className="hover:text-brand-700">Privacidad</Link>
         <Link href="/terminos" className="hover:text-brand-700">Términos de uso</Link>

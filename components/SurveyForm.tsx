@@ -262,7 +262,7 @@ export default function SurveyForm() {
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4">
             <div>
               <span className="field-label">Apetito</span>
               <div className="segment grid-cols-3">

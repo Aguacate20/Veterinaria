@@ -1,6 +1,9 @@
 import AdSlot from "@/components/AdSlot";
 import SiteFooter from "@/components/SiteFooter";
 import SurveyForm from "@/components/SurveyForm";
+import GuideCard from "@/components/GuideCard";
+import Link from "next/link";
+import { GUIDES } from "@/lib/guias";
 
 const STEPS = [
   {
@@ -30,9 +33,14 @@ export default function Home() {
           </span>
           <span className="font-display text-xl font-semibold tracking-tight text-brand-900">Huella Sana</span>
         </a>
-        <a href="#encuesta" className="btn-ghost hidden sm:inline-flex">
-          Empezar evaluación
-        </a>
+        <nav className="flex items-center gap-2">
+          <Link href="/guias" className="btn-ghost">
+            Guías
+          </Link>
+          <a href="#encuesta" className="btn-ghost hidden sm:inline-flex">
+            Empezar evaluación
+          </a>
+        </nav>
       </header>
 
       <section className="rise mt-16 grid items-center gap-10 sm:mt-24 lg:grid-cols-[1.15fr_1fr]">
@@ -97,6 +105,25 @@ export default function Home() {
               <h3 className="mt-3 text-lg font-semibold text-brand-900">{s.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-ink/70">{s.text}</p>
             </div>
+          ))}
+        </div>
+      </section>
+
+      <section id="guias" className="mt-24 scroll-mt-8">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h2 className="font-display text-3xl font-semibold tracking-tight text-brand-900">Guías para dueños</h2>
+            <p className="mt-2 max-w-xl text-ink/70">
+              Qué significa cada síntoma, qué observar en casa y cuándo ir al veterinario, en lenguaje sencillo.
+            </p>
+          </div>
+          <Link href="/guias" className="btn-ghost">
+            Ver todas las guías →
+          </Link>
+        </div>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {GUIDES.slice(0, 6).map((g) => (
+            <GuideCard key={g.slug} g={g} />
           ))}
         </div>
       </section>
