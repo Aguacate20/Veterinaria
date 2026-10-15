@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CONTACT_EMAIL, SITE_NAME } from "@/lib/site";
+import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_INTL, SITE_NAME, WHATSAPP_URL } from "@/lib/site";
 
 export default function SiteFooter() {
   return (
@@ -14,8 +14,13 @@ export default function SiteFooter() {
         <Link href="/acerca" className="hover:text-brand-700">Acerca de</Link>
         <Link href="/privacidad" className="hover:text-brand-700">Privacidad</Link>
         <Link href="/terminos" className="hover:text-brand-700">Términos de uso</Link>
-        <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-brand-700">Contacto</a>
+        <Link href="/acerca#contacto" className="hover:text-brand-700">Contacto</Link>
       </nav>
+      <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1">
+        <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-brand-700">✉️ {CONTACT_EMAIL}</a>
+        <a href={`tel:+${CONTACT_PHONE_INTL}`} className="hover:text-brand-700">📞 {CONTACT_PHONE}</a>
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hover:text-brand-700">💬 WhatsApp</a>
+      </div>
       <p className="mt-6 text-xs">© {new Date().getFullYear()} {SITE_NAME}. Hecho en Colombia 🇨🇴</p>
     </footer>
   );

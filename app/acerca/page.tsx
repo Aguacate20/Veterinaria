@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import LegalLayout from "@/components/LegalLayout";
-import { CONTACT_EMAIL, SITE_NAME } from "@/lib/site";
+import { CONTACT_EMAIL, CONTACT_PHONE, SITE_NAME, WHATSAPP_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Acerca de",
@@ -36,10 +36,11 @@ export default function Acerca() {
         discreta y claramente identificada, nunca dentro del resultado ni bloqueando el contenido.
       </p>
 
-      <h2 className="font-display text-2xl font-semibold text-brand-900">Contacto</h2>
+      <h2 id="contacto" className="font-display scroll-mt-8 text-2xl font-semibold text-brand-900">Contacto</h2>
       <p>
         ¿Eres veterinario y quieres colaborar, o encontraste un error? Escríbenos a{" "}
-        <a className="text-brand-700 underline" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+                <a className="text-brand-700 underline" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> o al{" "}
+        <a className="text-brand-700 underline" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">{CONTACT_PHONE} (WhatsApp)</a>.
       </p>
     </LegalLayout>
   );
