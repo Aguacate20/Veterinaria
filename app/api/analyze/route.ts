@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { resultSchema, surveySchema, type TriageResult } from "@/lib/schema";
 import { SYSTEM_PROMPT, buildUserText } from "@/lib/prompt";
 import { applyRedFlags, detectRedFlags } from "@/lib/triage";
+import { checkLimits, clientIp } from "@/lib/ratelimit";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -77,6 +78,15 @@ const FALLBACK_EMERGENCY: TriageResult = {
 export async function POST(req: Request) {
   if (!process.env.NVIDIA_API_KEY) {
     return NextResponse.json({ error: "Falta configurar NVIDIA_API_KEY en el servidor." }, { status: 500 });
+  }
+
+  const limit = await checkLimits(clientIp(req));
+  if (!limit.ok) {
+    const msg =
+      limit.reason === "global"
+        ? "Hoy ya alcanzamos el máximo de consultas gratuitas. Vuelve a intentarlo mañana o, si es urgente, llama a tu veterinario."
+        : "Has hecho varias consultas seguidas. Espera unos minutos antes de intentar de nuevo.";
+    return NextResponse.json({ error: msg }, { status: 429, headers: { "Retry-After": String(limit.retryAfterSec) } });
   }
 
   let body: unknown;

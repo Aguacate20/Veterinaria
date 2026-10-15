@@ -1,3 +1,5 @@
+import AdSlot from "@/components/AdSlot";
+import SiteFooter from "@/components/SiteFooter";
 import SurveyForm from "@/components/SurveyForm";
 
 const STEPS = [
@@ -99,6 +101,8 @@ export default function Home() {
         </div>
       </section>
 
+      <AdSlot slot="1111111111" />
+
       <section id="encuesta" className="mt-24 scroll-mt-8">
         <div className="mb-8 max-w-2xl">
           <h2 className="font-display text-3xl font-semibold tracking-tight text-brand-900">Evaluación breve</h2>
@@ -109,14 +113,7 @@ export default function Home() {
         <SurveyForm />
       </section>
 
-      <footer className="mt-24 border-t border-sand-200 pt-8 text-sm text-ink/55">
-        <p>
-          <strong className="text-ink/75">Aviso importante.</strong> Huella Sana ofrece orientación preliminar generada con
-          inteligencia artificial y no constituye un diagnóstico ni reemplaza la valoración de un médico veterinario. Si tu
-          mascota tiene dificultad para respirar, convulsiones, sangrado abundante o colapsa, acude a urgencias de inmediato.
-        </p>
-        <p className="mt-3">Las fotos y respuestas se usan únicamente para generar tu resultado y no se almacenan.</p>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }

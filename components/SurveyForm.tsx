@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { SYMPTOMS, type Survey, type TriageResult } from "@/lib/schema";
+import AdSlot from "./AdSlot";
 import ResultCard from "./ResultCard";
 
 type FormState = Omit<Survey, "ageYears" | "photo"> & { ageYears: string; photo: string | null };
@@ -118,6 +119,7 @@ export default function SurveyForm() {
     return (
       <div ref={resultRef} className="scroll-mt-8">
         <ResultCard data={result} species={form.species} name={form.name || undefined} onReset={reset} />
+        <AdSlot slot="2222222222" />
       </div>
     );
   }
