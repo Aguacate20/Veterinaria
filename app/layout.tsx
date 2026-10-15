@@ -1,15 +1,42 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Huella Sana · ¿Mi perro o gato necesita ir al veterinario?",
-  description:
-    "Responde una encuesta breve, sube una foto y recibe una orientación preliminar con IA sobre la urgencia de llevar a tu mascota al veterinario.",
-  openGraph: {
-    title: "Huella Sana",
-    description: "Orientación preliminar con IA para saber si tu mascota necesita ir al veterinario.",
-    type: "website",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Huella Sana · ¿Mi perro o gato necesita ir al veterinario?",
+    template: `%s · ${SITE_NAME}`,
   },
+  description:
+    "Responde una encuesta breve, sube una foto y recibe una orientación preliminar con IA sobre si tu perro o gato necesita ir al veterinario: emergencia, consulta pronto u observar en casa. Gratis.",
+  keywords: [
+    "mi perro está enfermo",
+    "mi gato está enfermo",
+    "llevar al veterinario",
+    "síntomas perro",
+    "síntomas gato",
+    "veterinario urgencias",
+    "orientación veterinaria IA",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "es_CO",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: "¿Mi perro o gato necesita ir al veterinario?",
+    description: "Encuesta breve + foto. Orientación preliminar con IA en 1 minuto. Gratis.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "¿Mi perro o gato necesita ir al veterinario?",
+    description: "Encuesta breve + foto. Orientación preliminar con IA en 1 minuto. Gratis.",
+  },
+  robots: { index: true, follow: true },
+  verification: process.env.GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+    : undefined,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -23,7 +50,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-dvh font-sans">{children}</body>
+      <body className="min-h-dvh font-sans">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: SITE_NAME,
+              url: SITE_URL,
+              applicationCategory: "HealthApplication",
+              operatingSystem: "Web",
+              inLanguage: "es",
+              offers: { "@type": "Offer", price: "0", priceCurrency: "COP" },
+              description:
+                "Orientación preliminar con IA para saber si un perro o gato necesita ir al veterinario, a partir de una encuesta breve y una foto.",
+            }),
+          }}
+        />
+        {children}
+      </body>
     </html>
   );
 }
