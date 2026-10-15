@@ -20,6 +20,10 @@ export function detectRedFlags(s: Survey): string[] {
     flags.push("Vómito/diarrea sin beber agua por más de un día (riesgo de deshidratación)");
   if (s.eating === "nada" && s.behavior === "muy_distinto" && s.severity === "grave")
     flags.push("No come y está muy distinto, con gravedad alta");
+  if (s.appearance?.encias === "palidas") flags.push("Encías pálidas o blancas (posible anemia, hemorragia interna o shock)");
+  if (s.appearance?.encias === "azuladas") flags.push("Encías azuladas o moradas (falta de oxígeno)");
+  if (s.appearance?.postura === "echado" && s.behavior === "muy_distinto")
+    flags.push("Echado sin poder levantarse y muy distinto a lo habitual");
   if (s.ageYears < 0.5 && (has("vomito") || has("diarrea") || has("letargo")))
     flags.push("Cachorro/gatito menor de 6 meses con síntomas digestivos o decaimiento");
 

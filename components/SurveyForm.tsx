@@ -2,10 +2,12 @@
 
 import { useRef, useState } from "react";
 import { SYMPTOMS, type Survey, type TriageResult } from "@/lib/schema";
+import type { Appearance } from "@/lib/appearance";
+import AppearancePicker from "./AppearancePicker";
 import AdSlot from "./AdSlot";
 import ResultCard from "./ResultCard";
 
-type FormState = Omit<Survey, "ageYears" | "photo"> & { ageYears: string; photo: string | null };
+type FormState = Omit<Survey, "ageYears" | "photo" | "appearance"> & { ageYears: string; photo: string | null; appearance: Appearance };
 
 const INITIAL: FormState = {
   species: "perro",
@@ -19,6 +21,7 @@ const INITIAL: FormState = {
   behavior: "normal",
   notes: "",
   photo: null,
+  appearance: {},
 };
 
 const MAX_BASE64_BYTES = 170_000; // límite práctico de imagen inline en la API de NVIDIA (~180 KB)
@@ -81,7 +84,9 @@ export default function SurveyForm() {
     }
   };
 
-  const canSubmit = form.ageYears !== "" && (form.symptoms.length > 0 || (form.notes?.trim().length ?? 0) > 10);
+  const hasAppearance = Object.values(form.appearance).some(Boolean);
+  const canSubmit =
+    form.ageYears !== "" && (form.symptoms.length > 0 || hasAppearance || (form.notes?.trim().length ?? 0) > 10);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -207,6 +212,17 @@ export default function SurveyForm() {
                 </button>
               ))}
             </div>
+          </div>
+
+          <div>
+            <span className="field-label">
+              ¿Cómo se ve? <span className="font-normal text-ink/45">(toca lo que más se parezca; opcional)</span>
+            </span>
+            <AppearancePicker
+              species={form.species}
+              value={form.appearance}
+              onChange={(appearance) => set("appearance", appearance)}
+            />
           </div>
         </div>
 
@@ -353,7 +369,7 @@ export default function SurveyForm() {
 
       <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs text-ink/50">
-          Marca al menos un síntoma o describe lo que pasa para continuar. Tus datos no se almacenan.
+          Marca al menos un síntoma, una observación visual o describe lo que pasa para continuar. Tus datos no se almacenan.
         </p>
         <button type="submit" className="btn-primary w-full sm:w-auto" disabled={!canSubmit || status === "loading"}>
           {status === "loading" ? (

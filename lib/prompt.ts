@@ -1,4 +1,5 @@
 import { DURATION_LABEL, SYMPTOMS, type Survey } from "./schema";
+import { describeAppearance } from "./appearance";
 
 export const SYSTEM_PROMPT = `Eres un asistente de orientación veterinaria preliminar para dueños de perros y gatos en Latinoamérica. NO eres veterinario y NO diagnosticas: tu única tarea es ayudar a decidir con qué urgencia la mascota debería ser vista por un profesional, y qué observar mientras tanto.
 
@@ -46,6 +47,7 @@ export function buildUserText(s: Survey): string {
     `Duración: ${DURATION_LABEL[s.duration]}`,
     `Gravedad percibida por el dueño: ${s.severity}`,
     `Apetito: ${eating} · Comportamiento: ${behavior}`,
+    `Cómo se ve la mascota (observado por el dueño): ${describeAppearance(s.appearance)}`,
     `Descripción adicional del dueño: ${s.notes?.trim() || "(sin descripción)"}`,
     s.photo ? "Se adjunta una foto de la mascota." : "No se adjuntó foto.",
   ].join("\n");

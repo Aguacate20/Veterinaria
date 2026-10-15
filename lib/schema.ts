@@ -32,6 +32,16 @@ export const surveySchema = z.object({
   eating: z.enum(["normal", "menos", "nada"]),
   behavior: z.enum(["normal", "algo_raro", "muy_distinto"]),
   notes: z.string().trim().max(800).optional().or(z.literal("")),
+  /** Observaciones visuales (orejas, postura, cola, ojos, encías) */
+  appearance: z
+    .object({
+      orejas: z.enum(["arriba", "normal", "gachas"]).optional(),
+      postura: z.enum(["normal", "encorvado", "echado"]).optional(),
+      cola: z.enum(["arriba", "normal", "entre_patas"]).optional(),
+      ojos: z.enum(["brillantes", "apagados", "secrecion"]).optional(),
+      encias: z.enum(["rosadas", "palidas", "azuladas"]).optional(),
+    })
+    .optional(),
   /** data URL (image/jpeg|png|webp), ya comprimida en el cliente */
   photo: z.string().max(5_000_000).optional().nullable(),
 });
